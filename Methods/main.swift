@@ -40,3 +40,19 @@ print(counter.count)
 counter.reset()
 print(counter.count)
 // теперь значение counter равно 0
+
+
+//MARK: Свойство self
+print("\n//Свойство self")
+
+struct Point {
+    var x = 0.0, y = 0.0
+    func isToTheRightOf(x: Double) -> Bool {
+        return self.x > x
+    }
+}
+let somePoint = Point(x: 4.0, y: 5.0)
+if somePoint.isToTheRightOf(x: 1.0) {
+    print("Эта точка находится справа от линии, где x == 1.0")
+}
+// Выведет "Эта точка находится справа от линии, где x == 1.0"

@@ -72,3 +72,40 @@ var somePoint1 = Point1(x: 1.0, y: 1.0)
 somePoint1.moveBy(x: 2.0, y: 3.0)
 print("Сейчас эта точка на (\(somePoint1.x), \(somePoint1.y))")
 // Выведет "Сейчас эта точка на (3.0, 4.0)"
+
+
+//MARK: Присваивание значения для self внутри изменяющего метода
+print("\n//Присваивание значения для self внутри изменяющего метода")
+
+struct Point2 {
+    var x = 0.0, y = 0.0
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        self = Point2(x: x + deltaX, y: y + deltaY)
+    }
+}
+var somePoint2 = Point2(x: 1.0, y: 1.0)
+somePoint2.moveBy(x: 3.0, y: 4.0)
+print("Сейчас эта точка на (\(somePoint2.x), \(somePoint2.y))")
+
+
+enum TriStateSwitch {
+    case off, low, high
+    mutating func next() {
+        switch self {
+        case .off:
+            self = .low
+            print("self = .low")
+        case .low:
+            self = .high
+            print("self = .high")
+        case .high:
+            self = .off
+            print("self = .off")
+        }
+    }
+}
+var ovenLight = TriStateSwitch.low
+ovenLight.next()
+// ovenLight равен .high
+ovenLight.next()
+// ovenLight равен .off

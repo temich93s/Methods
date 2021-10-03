@@ -109,3 +109,71 @@ ovenLight.next()
 // ovenLight равен .high
 ovenLight.next()
 // ovenLight равен .off
+
+
+//MARK: Методы типа
+print("\n//Методы типа")
+
+struct LevelTracker {
+    static var highestUnlockedLevel = 1
+    var currentLevel = 1
+    
+    static func unlock(_ level: Int) {
+        if level > highestUnlockedLevel { highestUnlockedLevel = level }
+    }
+    
+    static func isUnlocked(_ level: Int) -> Bool {
+        return level <= highestUnlockedLevel
+    }
+
+    @discardableResult mutating func advance(to level: Int) -> Bool {
+        if LevelTracker.isUnlocked(level) {
+            currentLevel = level
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+class Player {
+    var tracker = LevelTracker()
+    let playerName: String
+    func complete(level: Int) {
+        LevelTracker.unlock(level + 1)
+        tracker.advance(to: level + 1)
+    }
+    init(name: String) {
+        playerName = name
+    }
+}
+
+var player = Player(name: "Argyrios")
+player.complete(level: 1)
+print("Самый последний доступный уровень сейчас равен \(LevelTracker.highestUnlockedLevel)")
+//Выведет "Самый последний доступный уровень сейчас равен 2"
+print(player.playerName, player.tracker.currentLevel)
+
+var player2 = Player(name: "Beto")
+if player2.tracker.advance(to: 6) {
+    print("Игрок на уровне 6")
+} else {
+    print("Уровень 6 еще не разблокирован")
+}
+// Выведет "Уровень 6 еще не разблокирован"
+
+if player2.tracker.advance(to: 2) {
+    print("Игрок на уровне 2")
+} else {
+    print("Уровень 2 еще не разблокирован")
+}
+// Выведет "Уровень 1 еще не разблокирован"
+
+
+// mutating нужен для изменения свойств экземпляра структуры или перечисления, если меняется свойство самого типа структуры или перечисления то mutating не нужен
+struct myStruct {
+    static var a = 0
+    func myFunction(i: Int) {
+        myStruct.a = i
+    }
+}

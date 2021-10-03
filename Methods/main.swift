@@ -56,3 +56,19 @@ if somePoint.isToTheRightOf(x: 1.0) {
     print("Эта точка находится справа от линии, где x == 1.0")
 }
 // Выведет "Эта точка находится справа от линии, где x == 1.0"
+
+
+//MARK: Изменение типов значений методами экземпляра
+print("\n//Изменение типов значений методами экземпляра")
+
+struct Point1 {
+   var x = 0.0, y = 0.0
+   mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+      x += deltaX
+      y += deltaY
+   }
+}
+var somePoint1 = Point1(x: 1.0, y: 1.0)
+somePoint1.moveBy(x: 2.0, y: 3.0)
+print("Сейчас эта точка на (\(somePoint1.x), \(somePoint1.y))")
+// Выведет "Сейчас эта точка на (3.0, 4.0)"
